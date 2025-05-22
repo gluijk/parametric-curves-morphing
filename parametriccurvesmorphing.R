@@ -7,7 +7,7 @@ library(Cairo)  # high quality antialiasing
 
 
 ###################################
-# Lorenz attractor
+# Lorenz attractor (source: Wikipedia)
 
 library(deSolve)  # ordinary differential equations solver (ode)
 library(plotly)  # high quality plotting
