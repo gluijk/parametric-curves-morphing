@@ -87,7 +87,7 @@ t=seq(0, 1, length.out=N)
 # Full HD
 DIMX=1920  # 512
 DIMY=1080  # 512
-GAP=ifelse(DIMX==1920, 5, 1)  # plot border
+GAP=ifelse(DIMX==1920, 5, 1)  # outer margin for plotting
 LWD=ifelse(DIMX==1920, 2, 1)  # curves line width
 
 # All images normalized to xlim=c(-1,1), ylim=c(-1,1)
