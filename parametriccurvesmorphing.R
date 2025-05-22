@@ -116,7 +116,7 @@ for (morph in 1:NMORPH) {
         X[,1]=X[,3]
         Y[,1]=Y[,3]
         
-        t2=(t*16-8)
+        t2=t*16-8
         X[,3]=6 * sin(9.52*t2) * round(cos(cos(4.8*t2))^0.5)
         Y[,3]=6 * cos(9.52*t2)^4 * sin(sin(4.8*t2))
         
