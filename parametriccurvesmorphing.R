@@ -3,14 +3,14 @@
 # https://www.overfitting.net/2025/05/morphing-de-curvas-parametricas-con-r.html
 
 library(png)
-library(Cairo)
+library(Cairo)  # high quality antialiasing
 
 
 ###################################
 # Lorenz attractor
 
 library(deSolve)  # ordinary differential equations solver (ode)
-library(plotly)  # high quality atialiased output
+library(plotly)  # high quality plotting
 
 
 # Parameters:  a       b        c
@@ -28,7 +28,7 @@ Lorenz=function (t, vars, prm) {
     })
 }
 
-N=100000 # number of points
+N=100000  # number of points per curve
 times=seq(from=0, to=100, length.out=N)
 # Ordinary differential equations solver (ode)
 out=ode(y=varini, times=times, func=Lorenz, parms=prm)
@@ -71,8 +71,8 @@ browseURL("lorenzattractor.html")
 ###################################
 # Parameters
 
-N=100000 # number of points
-NFRAMES=50  #283  # number of frames per transition -> 1981 total frames
+N=100000  # number of points per curve
+NFRAMES=283  # number of frames per transition -> 1981 total frames
 NMORPH=7
 # Create Nx3 matrix to hold the parametric curves
 X=matrix(nrow=N, ncol=3)  # X[,1]=start, X[,2]=frame, X[,3]=end
@@ -85,13 +85,13 @@ t=seq(0, 1, length.out=N)
 # Animation
 
 # Full HD
-DIMX=1920 # 512
-DIMY=1080 # 512
+DIMX=1920  # 512
+DIMY=1080  # 512
 GAP=ifelse(DIMX==1920, 5, 1)  # plot border
-LWD=ifelse(DIMX==1920, 2, 1)  # lines thickness
+LWD=ifelse(DIMX==1920, 2, 1)  # curves line width
 
 # All images normalized to xlim=c(-1,1), ylim=c(-1,1)
-fm=0  # general frame count
+fm=0  # global frame count
 for (morph in 1:NMORPH) {
     if (morph==1) {  # circle -> spiral
         X[,1]=cos(2*pi*t)
@@ -131,13 +131,13 @@ for (morph in 1:NMORPH) {
         
         X[,3]=(X[,3]-min(X[,3]))/(max(X[,3])-min(X[,3]))*2-1
         Y[,3]=(Y[,3]-min(Y[,3]))/(max(Y[,3])-min(Y[,3]))*2-1 
-    } else if (morph==6) {  # -> lorenz
+    } else if (morph==6) {  # -> lorenz attractor
         X[,1]=X[,3]
         Y[,1]=Y[,3]
         
         X[,3]=(out[,2]-min(out[,2]))/(max(out[,2])-min(out[,2]))*2-1
         Y[,3]=(out[,4]-min(out[,4]))/(max(out[,4])-min(out[,4]))*2-1  
-    } else if (morph==7) {  # -> circle (initial image)
+    } else if (morph==7) {  # -> circle (loop to initial image)
         X[,1]=X[,3]
         Y[,1]=Y[,3]
         
@@ -149,7 +149,7 @@ for (morph in 1:NMORPH) {
         name=paste0("curves", ifelse(fm<10, "000", ifelse(fm<100, "00",
                               ifelse(fm<1000, "0", ""))), fm, ".png")
         print(paste0(fm+1, "/", NFRAMES*NMORPH, ": Writing '", name, "'..."))
-        alpha=f/(NFRAMES-1)  # alpha loops through 0..1
+        alpha=f/(NFRAMES-1)  # loop alpha through 0..1
         X[,2] = (1-alpha)*X[,1] + alpha*X[,3]  # linear interpolation
         Y[,2] = (1-alpha)*Y[,1] + alpha*Y[,3]
         CairoPNG(name, width=DIMX, height=DIMY, antialias="subpixel")
@@ -166,7 +166,7 @@ for (morph in 1:NMORPH) {
 #############################
 # Add Full HD title...
 
-bkg=readPNG("background.png")
+bkg=readPNG("background.png")  # text
 for (fm in 0:1980) {
     name=paste0("curves", ifelse(fm<10, "000", ifelse(fm<100, "00",
                           ifelse(fm<1000, "0", ""))), fm, ".png")
