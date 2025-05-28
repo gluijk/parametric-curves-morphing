@@ -132,7 +132,7 @@ for (morph in 1:NMORPH) {
         
         X[,3]=(X[,3]-min(X[,3]))/(max(X[,3])-min(X[,3]))*2-1
         Y[,3]=(Y[,3]-min(Y[,3]))/(max(Y[,3])-min(Y[,3]))*2-1 
-    } else if (morph==6) {  # -> lorenz attractor
+    } else if (morph==6) {  # -> Lorenz attractor
         X[,1]=X[,3]
         Y[,1]=Y[,3]
         
